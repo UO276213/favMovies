@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="film_types_array">
+        <item>Sin definir</item>
+        <item>Acción</item>
+        <item>Aventuras</item>
+        <item>Dramáticas</item>
+        <item>De terror</item>
+        <item>Musicales</item>
+        <item>Ciencia Ficción</item>
+        <item>De guerra</item>
+        <item>Comedias</item>
+        <item>Romáticas</item>
+    </string-array>
+</resources>
