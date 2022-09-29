@@ -4,7 +4,7 @@
     <string name="title_label">Título</string>
     <string name="title_placeholder">Título de la pelicula</string>
     <string name="synopsis_label">Argumento</string>
-    <string name="synopsis_placeholder">Sinanpsis de la película</string>
+    <string name="synopsis_placeholder">Sinopsis de la película</string>
     <string name="category_label">Categoría</string>
     <string name="duration_label">Duración</string>
     <string name="save_btn_text">Guardar</string>
