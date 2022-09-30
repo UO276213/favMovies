@@ -14,4 +14,16 @@
     <string name="cancel_action">Acción Cancelada</string>
     <string name="create_category_msg">Crear categoría</string>
     <string name="select_category_btn">Seleccionar</string>
+    <string name="newCatelogryLabel">Creación de nueva categoría</string>
+    <string name="new_category_name_label">Nombre de la categoría</string>
+    <string name="new_category_name_txt">Nombre de la categoría</string>
+    <string name="new_category_description_label">Descripción Categoria</string>
+    <string name="new_category_description_txt">Descripción categoría</string>
+    <string name="btn_cancel">Cancelar</string>
+    <string name="btnOk">Ok</string>
+    <string name="modify_category_existent">Modificar Categoría existente</string>
+    <string name="subject_compartir">Te comparto la sigueinte película</string>
+    <string name="titulo">Título de la película</string>
+    <string name="contenido">Contenido de la película</string>
+    <string name="compruba_conexión">Comprobando conexión</string>
 </resources>
