@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">favMovies</string>
+    <string name="app_title">Mis películas favoritas</string>
+    <string name="title_label">Título</string>
+    <string name="title_placeholder">Título de la pelicula</string>
+    <string name="synopsis_label">Argumento</string>
+    <string name="synopsis_placeholder">Sinopsis de la película</string>
+    <string name="category_label">Categoría</string>
+    <string name="duration_label">Duración</string>
+    <string name="save_btn_text">Guardar</string>
+    <string name="film_date">Fecha de la película</string>
+    <string name="save_msg">Película guardada!</string>
+    <string name="modify_category">Modificar Categoría</string>
+    <string name="cancel_action">Acción Cancelada</string>
+    <string name="create_category_msg">Crear categoría</string>
+    <string name="select_category_btn">Seleccionar</string>
+</resources>
