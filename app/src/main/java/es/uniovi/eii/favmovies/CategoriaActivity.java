@@ -33,7 +33,7 @@ public class CategoriaActivity extends AppCompatActivity {
         Button btnCancel = findViewById(R.id.btnCancel);
 
         if (posCategoria == 0)
-            textViewCrea.setText(R.string.newCatelogryLabel);
+            textViewCrea.setText(R.string.new_catelogry_label);
         else {
             textViewCrea.setText(R.string.modify_category_existent);
             editNomCategoria.setText(categoriaEntrada.getNombre());

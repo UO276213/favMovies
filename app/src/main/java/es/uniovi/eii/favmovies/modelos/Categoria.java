@@ -57,5 +57,11 @@ public class Categoria implements Parcelable {
         parcel.writeString(descripcion);
     }
 
-
+    @Override
+    public String toString() {
+        return "Categoria{" +
+                "nombre='" + nombre + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                '}';
+    }
 }

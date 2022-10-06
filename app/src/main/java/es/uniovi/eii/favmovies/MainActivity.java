@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -16,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -30,25 +33,47 @@ public class MainActivity extends AppCompatActivity {
     public static final String POS_CATEGORIA_SELEECIONADA = "pos_categoria_seleccionada";
     public static final String CATEGORIA_SELECCIONADA = "categoria_seleccionada";
     public static final String CATEGORIA_MODIFICADA = "categoria_modificada";
-    private Spinner spinner;
 
     public static int GESTION_CATEGORIA = 1;
-    private boolean creandoCategoria = false;
-    private ArrayList<Categoria> listaCategoria;
+
+    // Modelo
+    private ArrayList<Categoria> categoryList;
+
+    // Componentes
+    private Spinner spinner;
+    private boolean creatingCategory = false;
+
+    // Película actual
     private Pelicula pelicula;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setTitle(R.string.app_title);
 
-        listaCategoria = new ArrayList<>();
-        listaCategoria.add(new Categoria("Acción", "Película de acción"));
-        listaCategoria.add(new Categoria("Comedia", "Película de comedia"));
+        categoryList = new ArrayList<>();
+        categoryList.add(new Categoria("Acción", "Película de acción"));
+        categoryList.add(new Categoria("Comedia", "Película de comedia"));
 
         FloatingActionButton saveBtn = findViewById(R.id.saveBtn);
         spinner = findViewById(R.id.spinnerCategory);
-        introListaSpinner(spinner, listaCategoria);
+        introListaSpinner(spinner, categoryList);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0)
+                    selectedCategory = null;
+                else
+                    selectedCategory = categoryList.get(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                return;
+            }
+        });
 
         //Definimos listnener
         saveBtn.setOnClickListener(view -> {
@@ -60,16 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
         ImageButton modifyCategoryBtn = findViewById(R.id.modifyBtnCategory);
         modifyCategoryBtn.setOnClickListener(view -> {
-            spinner = findViewById(R.id.spinnerCategory);
-//            Snackbar msgCreaCategory;
-
             modificarCategoria();
-
-
-            // Accción de cancelar
-//            msgCreaCategory.setAction(android.R.string.cancel, view1 -> Snackbar.make(findViewById(R.id.mainLayout), R.string.cancel_action, Snackbar.LENGTH_LONG).show());
-
-//            msgCreaCategory.show();
         });
     }
 
@@ -108,10 +124,10 @@ public class MainActivity extends AppCompatActivity {
         Intent categoriaIntent = new Intent(MainActivity.this, CategoriaActivity.class);
 
         categoriaIntent.putExtra(POS_CATEGORIA_SELEECIONADA, spinner.getSelectedItemPosition());
-        creandoCategoria = true;
-        if (spinner.getSelectedItemPosition() > 0){
-            creandoCategoria = false;
-            categoriaIntent.putExtra(CATEGORIA_SELECCIONADA, listaCategoria.get(spinner.getSelectedItemPosition() - 1));
+        creatingCategory = true;
+        if (spinner.getSelectedItemPosition() > 0) {
+            creatingCategory = false;
+            categoriaIntent.putExtra(CATEGORIA_SELECCIONADA, categoryList.get(spinner.getSelectedItemPosition() - 1));
         }
 
         startActivityForResult(categoriaIntent, GESTION_CATEGORIA);
@@ -122,17 +138,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == GESTION_CATEGORIA){
-            if (resultCode == RESULT_OK){
+        if (requestCode == GESTION_CATEGORIA) {
+            if (resultCode == RESULT_OK) {
                 Categoria categoriaAux = data.getParcelableExtra(CATEGORIA_MODIFICADA);
 
                 Log.d("favMovies.MainActivity", categoriaAux.toString());
 
-                if (creandoCategoria){
-                    listaCategoria.add(categoriaAux);
-                    introListaSpinner(spinner, listaCategoria);
+                if (creatingCategory) {
+                    categoryList.add(categoriaAux);
+                    introListaSpinner(spinner, categoryList);
                 } else {
-                    for (Categoria cat: listaCategoria){
+                    for (Categoria cat : categoryList) {
                         if (cat.getNombre().equals(categoriaAux.getNombre())) {
                             cat.setDescripcion(categoriaAux.getDescripcion());
                             Log.d("FavMovies.MainActivity", "Modificada la descripción de: " + cat.getNombre());
@@ -149,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
 
         nombres.add("Sin definir");
 
-        for (Categoria categoria : listaCategoria){
+        for (Categoria categoria : listaCategoria) {
             nombres.add(categoria.getNombre());
         }
 
@@ -167,16 +183,16 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.Compartir){
+        if (item.getItemId() == R.id.Compartir) {
             Log.d("Guardar Peli", "Guardar Peli");
 //            guardarPeli();
 
             Conexion conexion = new Conexion(getApplicationContext());
 
-            if (conexion.CompruebaConexion()){
+            if (conexion.CompruebaConexion()) {
                 compartirPeli();
-            }else
-                Toast.makeText(getApplicationContext(), R.string.compruba_conexión, Toast.LENGTH_LONG).show();
+            } else
+                Toast.makeText(getApplicationContext(), R.string.check_conexion, Toast.LENGTH_LONG).show();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -186,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
         itSend.setType("text/plain");
 
         itSend.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.subject_compartir) + ": " + pelicula.getTitulo());
-        itSend.putExtra(Intent.EXTRA_TEXT, getString(R.string.titulo) + ": " + pelicula.getTitulo() + "\n" + getString(R.string.contenido) + ": " + pelicula.getArgumento());
+        itSend.putExtra(Intent.EXTRA_TEXT, getString(R.string.film_title) + ": " + pelicula.getTitulo() + "\n" + getString(R.string.film_content) + ": " + pelicula.getArgumento());
 
         Intent shareIntent = Intent.createChooser(itSend, null);
 
