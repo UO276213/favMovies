@@ -131,7 +131,7 @@
         app:layout_constraintTop_toBottomOf="@+id/categoryLabel"
         app:layout_constraintVertical_bias="0.0" />
 
-    <Button
+    <ImageButton
         android:id="@+id/modifyBtnCategory"
         android:layout_width="145dp"
         android:layout_height="49dp"
