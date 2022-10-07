@@ -3,6 +3,8 @@ package es.uniovi.eii.favmovies.modelos;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Objects;
+
 public class Categoria implements Parcelable {
 
     private String nombre;
@@ -11,6 +13,19 @@ public class Categoria implements Parcelable {
     public Categoria(String nombre, String descripcion) {
         this.nombre = nombre;
         this.descripcion = descripcion;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Categoria categoria = (Categoria) o;
+        return nombre.equals(categoria.nombre);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nombre);
     }
 
     protected Categoria(Parcel in) {

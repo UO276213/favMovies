@@ -18,7 +18,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -41,7 +40,13 @@ public class MainActivity extends AppCompatActivity {
 
     // Componentes
     private Spinner spinner;
+    private EditText titleInput;
+    private EditText synopsisInput;
+    private EditText durationInput;
+    private EditText dateInput;
+
     private boolean creatingCategory = false;
+    private boolean creatingFilm = false;
 
     // Película actual
     private Pelicula pelicula;
@@ -52,6 +57,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setTitle(R.string.app_title);
 
+        titleInput = findViewById(R.id.titleTxtInput);
+        synopsisInput = findViewById(R.id.synopsisTxtInput);
+        durationInput = findViewById(R.id.durationTxtInput);
+        dateInput = findViewById(R.id.dateTxtInput);
+
         categoryList = new ArrayList<>();
         categoryList.add(new Categoria("Acción", "Película de acción"));
         categoryList.add(new Categoria("Comedia", "Película de comedia"));
@@ -59,6 +69,22 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton saveBtn = findViewById(R.id.saveBtn);
         spinner = findViewById(R.id.spinnerCategory);
         introListaSpinner(spinner, categoryList);
+
+        Intent intent = getIntent();
+        Pelicula film = intent.getParcelableExtra(MainRecyclerActivity.SELECTED_FILM);
+        if (film != null) {
+            titleInput.setText(film.getTitulo());
+            synopsisInput.setText(film.getArgument());
+            durationInput.setText(film.getDuration());
+            dateInput.setText(film.getDate());
+
+            for (Categoria category : categoryList){
+                if (category.getNombre().equals(film.getCategory().getNombre())){
+                    spinner.setSelection(categoryList.indexOf(category) + 1);
+                    break;
+                }
+            }
+        }
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -90,10 +116,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean validarCampos() {
-        EditText titleInput = findViewById(R.id.titleTxtInput);
-        EditText synopsisInput = findViewById(R.id.synopsisTxtInput);
-        EditText durationInput = findViewById(R.id.durationTxtInput);
-        EditText dateInput = findViewById(R.id.dateTxtInput);
+
 
         if (titleInput.getText().toString().isEmpty()) {
             Snackbar.make(findViewById(R.id.mainLayout), "Falta el título", Snackbar.LENGTH_LONG).show();
@@ -202,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
         itSend.setType("text/plain");
 
         itSend.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.subject_compartir) + ": " + pelicula.getTitulo());
-        itSend.putExtra(Intent.EXTRA_TEXT, getString(R.string.film_title) + ": " + pelicula.getTitulo() + "\n" + getString(R.string.film_content) + ": " + pelicula.getArgumento());
+        itSend.putExtra(Intent.EXTRA_TEXT, getString(R.string.film_title) + ": " + pelicula.getTitulo() + "\n" + getString(R.string.film_content) + ": " + pelicula.getArgument());
 
         Intent shareIntent = Intent.createChooser(itSend, null);
 

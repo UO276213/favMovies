@@ -1,69 +1,106 @@
 package es.uniovi.eii.favmovies.modelos;
 
-public class Pelicula {
+import android.os.Parcel;
+import android.os.Parcelable;
 
-    private String titulo;
-    private String argumento;
-    private Categoria categoria;
-    private String duracion;
-    private String fecha;
+public class Pelicula implements Parcelable {
 
-    public Pelicula(String titulo, String argumento, Categoria categoria, String duracion, String fecha) {
-        this.titulo = titulo;
-        this.argumento = argumento;
-        this.categoria = categoria;
-        this.duracion = duracion;
-        this.fecha = fecha;
+    private String title;
+    private String argument;
+    private Categoria category;
+    private String duration;
+    private String date;
+
+    public Pelicula(String titulo, String argument, Categoria category, String duration, String date) {
+        this.title = titulo;
+        this.argument = argument;
+        this.category = category;
+        this.duration = duration;
+        this.date = date;
     }
 
-    public void setArgumento(String argumento) {
-        this.argumento = argumento;
+    protected Pelicula(Parcel in) {
+        title = in.readString();
+        argument = in.readString();
+        category = in.readParcelable(Categoria.class.getClassLoader());
+        duration = in.readString();
+        date = in.readString();
     }
 
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
+    public static final Creator<Pelicula> CREATOR = new Creator<Pelicula>() {
+        @Override
+        public Pelicula createFromParcel(Parcel in) {
+            return new Pelicula(in);
+        }
+
+        @Override
+        public Pelicula[] newArray(int size) {
+            return new Pelicula[size];
+        }
+    };
+
+    public void setArgument(String argument) {
+        this.argument = argument;
     }
 
-    public String getDuracion() {
-        return duracion;
+    public void setCategory(Categoria category) {
+        this.category = category;
     }
 
-    public void setDuracion(String duracion) {
-        this.duracion = duracion;
+    public String getDuration() {
+        return duration;
     }
 
-    public String getFecha() {
-        return fecha;
+    public void setDuration(String duration) {
+        this.duration = duration;
     }
 
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public void setTitulo(String titulo) {
-        this.titulo = titulo;
+        this.title = titulo;
     }
 
     public String getTitulo() {
-        return titulo;
+        return title;
     }
 
-    public String getArgumento() {
-        return argumento;
+    public String getArgument() {
+        return argument;
     }
 
-    public Categoria getCategoria() {
-        return categoria;
+    public Categoria getCategory() {
+        return category;
     }
 
     @Override
     public String toString() {
         return "Pelicula{" +
-                "titulo='" + titulo + '\'' +
-                ", argumento='" + argumento + '\'' +
-                ", categoria=" + categoria +
-                ", duracion='" + duracion + '\'' +
-                ", fecha='" + fecha + '\'' +
+                "titulo='" + title + '\'' +
+                ", argumento='" + argument + '\'' +
+                ", categoria=" + category +
+                ", duracion='" + duration + '\'' +
+                ", fecha='" + date + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(title);
+        parcel.writeString(argument);
+        parcel.writeParcelable(category, i);
+        parcel.writeString(duration);
+        parcel.writeString(date);
     }
 }

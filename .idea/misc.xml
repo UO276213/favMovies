@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/uo276213/Desktop/favMovies/app/src/main/res/layout/activity_categoria.xml" value="0.32155797101449274" />
+        <entry key="..\:/Users/uo276213/Desktop/favMovies/app/src/main/res/layout/activity_main.xml" value="0.32155797101449274" />
+        <entry key="..\:/Users/uo276213/Desktop/favMovies/app/src/main/res/layout/activity_main_recycler.xml" value="0.18" />
+        <entry key="..\:/Users/uo276213/Desktop/favMovies/app/src/main/res/layout/linea_recicler_view_pelicula.xml" value="0.32155797101449274" />
+      </map>
+    </option>
+  </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_17_PREVIEW" project-jdk-name="17" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="17" project-jdk-type="JavaSDK" />
 </project>

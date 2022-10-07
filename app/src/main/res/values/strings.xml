@@ -27,4 +27,6 @@
     <string name="film_content">Contenido de la película</string>
     <string name="check_conexion">Comprobando conexión</string>
     <string name="share">Compartir</string>
+    <string name="titulopeli">Tenet</string>
+    <string name="fechaestreno">Fecha</string>
 </resources>
