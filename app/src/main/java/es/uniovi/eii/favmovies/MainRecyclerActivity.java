@@ -24,6 +24,7 @@ public class MainRecyclerActivity extends AppCompatActivity {
     public static int NEW_FILM_CODE = 1;
 
     public static final String SELECTED_FILM = "selected_film";
+    public static final String EDITION_MODE = "edition_mode";
     private List<Pelicula> filmsList;
     private RecyclerView listFilmView;
 
@@ -60,6 +61,7 @@ public class MainRecyclerActivity extends AppCompatActivity {
         Intent mainActivity = new Intent(MainRecyclerActivity.this, MainActivity.class);
 
         mainActivity.putExtra(SELECTED_FILM, film);
+        mainActivity.putExtra(EDITION_MODE, false);
 
         startActivity(mainActivity);
     }
@@ -89,6 +91,11 @@ public class MainRecyclerActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == NEW_FILM_CODE) {
+            if (resultCode == RESULT_OK){
+                Pelicula film = data.getParcelableExtra(MainActivity.FILM_CREATED);
+
+                //filmsList.add(film);
+            }
 
         }
     }

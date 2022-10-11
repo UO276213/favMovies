@@ -29,4 +29,5 @@
     <string name="share">Compartir</string>
     <string name="titulopeli">Tenet</string>
     <string name="fechaestreno">Fecha</string>
+    <string name="recommend_save_film">Guarde primero la película</string>
 </resources>

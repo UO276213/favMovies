@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String POS_CATEGORIA_SELEECIONADA = "pos_categoria_seleccionada";
     public static final String CATEGORIA_SELECCIONADA = "categoria_seleccionada";
     public static final String CATEGORIA_MODIFICADA = "categoria_modificada";
+    public static final String FILM_CREATED = "film_created";
 
     public static int GESTION_CATEGORIA = 1;
 
@@ -49,7 +50,8 @@ public class MainActivity extends AppCompatActivity {
     private boolean creatingFilm = false;
 
     // Película actual
-    private Pelicula pelicula;
+    private Pelicula film;
+    private boolean editionMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,15 +73,23 @@ public class MainActivity extends AppCompatActivity {
         introListaSpinner(spinner, categoryList);
 
         Intent intent = getIntent();
-        Pelicula film = intent.getParcelableExtra(MainRecyclerActivity.SELECTED_FILM);
+        film = intent.getParcelableExtra(MainRecyclerActivity.SELECTED_FILM);
+        boolean editionMode = intent.getBooleanExtra(MainRecyclerActivity.EDITION_MODE, false);
         if (film != null) {
             titleInput.setText(film.getTitulo());
             synopsisInput.setText(film.getArgument());
             durationInput.setText(film.getDuration());
             dateInput.setText(film.getDate());
 
-            for (Categoria category : categoryList){
-                if (category.getNombre().equals(film.getCategory().getNombre())){
+            titleInput.setEnabled(editionMode);
+            synopsisInput.setEnabled(editionMode);
+            durationInput.setEnabled(editionMode);
+            dateInput.setEnabled(editionMode);
+            spinner.setEnabled(editionMode);
+            saveBtn.setEnabled(editionMode);
+
+            for (Categoria category : categoryList) {
+                if (category.getNombre().equals(film.getCategory().getNombre())) {
                     spinner.setSelection(categoryList.indexOf(category) + 1);
                     break;
                 }
@@ -89,10 +99,8 @@ public class MainActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0)
-                    selectedCategory = null;
-                else
-                    selectedCategory = categoryList.get(position).toString();
+                if (position == 0) selectedCategory = null;
+                else selectedCategory = categoryList.get(position - 1).toString();
             }
 
             @Override
@@ -105,8 +113,15 @@ public class MainActivity extends AppCompatActivity {
         saveBtn.setOnClickListener(view -> {
             // Validación de cmapos
 
-            if (validarCampos())
+            if (validarCampos()) {
+                guardarPelicula();
                 Snackbar.make(findViewById(R.id.mainLayout), R.string.save_msg, Snackbar.LENGTH_LONG).show();
+                Intent intentResult = new Intent();
+                intentResult.putExtra(FILM_CREATED, film);
+
+                setResult(RESULT_OK, intentResult);
+                finish();
+            }
         });
 
         ImageButton modifyCategoryBtn = findViewById(R.id.modifyBtnCategory);
@@ -115,8 +130,17 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private boolean validarCampos() {
+    private void guardarPelicula() {
+        String title = titleInput.getText().toString();
+        String synopsis = synopsisInput.getText().toString();
+        String duration = durationInput.getText().toString();
+        String date = dateInput.getText().toString();
+        Categoria category = categoryList.get(spinner.getSelectedItemPosition());
 
+        film = new Pelicula(title, synopsis, category, duration, date);
+    }
+
+    private boolean validarCampos() {
 
         if (titleInput.getText().toString().isEmpty()) {
             Snackbar.make(findViewById(R.id.mainLayout), "Falta el título", Snackbar.LENGTH_LONG).show();
@@ -138,7 +162,6 @@ public class MainActivity extends AppCompatActivity {
             Snackbar.make(findViewById(R.id.mainLayout), "Falta la fecha", Snackbar.LENGTH_LONG).show();
             return false;
         }
-
 
         return true;
     }
@@ -207,15 +230,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.Compartir) {
-            Log.d("Guardar Peli", "Guardar Peli");
-//            guardarPeli();
+            if (film == null) {
+                Toast.makeText(getApplicationContext(), R.string.recommend_save_film, Toast.LENGTH_LONG).show();
+            } else {
+                Conexion conexion = new Conexion(getApplicationContext());
 
-            Conexion conexion = new Conexion(getApplicationContext());
-
-            if (conexion.CompruebaConexion()) {
-                compartirPeli();
-            } else
-                Toast.makeText(getApplicationContext(), R.string.check_conexion, Toast.LENGTH_LONG).show();
+                if (conexion.CompruebaConexion()) compartirPeli();
+                else
+                    Toast.makeText(getApplicationContext(), R.string.check_conexion, Toast.LENGTH_LONG).show();
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -224,8 +247,8 @@ public class MainActivity extends AppCompatActivity {
         Intent itSend = new Intent(Intent.ACTION_SEND);
         itSend.setType("text/plain");
 
-        itSend.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.subject_compartir) + ": " + pelicula.getTitulo());
-        itSend.putExtra(Intent.EXTRA_TEXT, getString(R.string.film_title) + ": " + pelicula.getTitulo() + "\n" + getString(R.string.film_content) + ": " + pelicula.getArgument());
+        itSend.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.subject_compartir) + ": " + film.getTitulo());
+        itSend.putExtra(Intent.EXTRA_TEXT, getString(R.string.film_title) + ": " + film.getTitulo() + "\n" + getString(R.string.film_content) + ": " + film.getArgument());
 
         Intent shareIntent = Intent.createChooser(itSend, null);
 
