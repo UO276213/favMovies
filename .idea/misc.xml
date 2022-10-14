@@ -3,10 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/uo276213/Desktop/favMovies/app/src/main/res/layout-w1240dp/content_scrolling.xml" value="0.1" />
+        <entry key="..\:/Users/uo276213/Desktop/favMovies/app/src/main/res/layout-w936dp/content_scrolling.xml" value="0.275" />
         <entry key="..\:/Users/uo276213/Desktop/favMovies/app/src/main/res/layout/activity_categoria.xml" value="0.32155797101449274" />
         <entry key="..\:/Users/uo276213/Desktop/favMovies/app/src/main/res/layout/activity_main.xml" value="0.32155797101449274" />
         <entry key="..\:/Users/uo276213/Desktop/favMovies/app/src/main/res/layout/activity_main_recycler.xml" value="0.18" />
+        <entry key="..\:/Users/uo276213/Desktop/favMovies/app/src/main/res/layout/activity_new_movie.xml" value="0.17831813576494426" />
+        <entry key="..\:/Users/uo276213/Desktop/favMovies/app/src/main/res/layout/activity_show_movie.xml" value="0.1" />
+        <entry key="..\:/Users/uo276213/Desktop/favMovies/app/src/main/res/layout/activity_show_movie2.xml" value="0.1" />
+        <entry key="..\:/Users/uo276213/Desktop/favMovies/app/src/main/res/layout/content_scrolling.xml" value="0.25" />
         <entry key="..\:/Users/uo276213/Desktop/favMovies/app/src/main/res/layout/linea_recicler_view_pelicula.xml" value="0.32155797101449274" />
+        <entry key="..\:/Users/uo276213/Desktop/favMovies/app/src/main/res/menu/menu.xml" value="0.1" />
+        <entry key="..\:/Users/uo276213/Desktop/favMovies/app/src/main/res/menu/menu_show_movie.xml" value="0.1" />
       </map>
     </option>
   </component>

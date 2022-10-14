@@ -7,12 +7,28 @@ import java.util.Objects;
 
 public class Categoria implements Parcelable {
 
+    public static final Creator<Categoria> CREATOR = new Creator<Categoria>() {
+        @Override
+        public Categoria createFromParcel(Parcel in) {
+            return new Categoria(in);
+        }
+
+        @Override
+        public Categoria[] newArray(int size) {
+            return new Categoria[size];
+        }
+    };
     private String nombre;
     private String descripcion;
 
     public Categoria(String nombre, String descripcion) {
         this.nombre = nombre;
         this.descripcion = descripcion;
+    }
+
+    protected Categoria(Parcel in) {
+        nombre = in.readString();
+        descripcion = in.readString();
     }
 
     @Override
@@ -27,23 +43,6 @@ public class Categoria implements Parcelable {
     public int hashCode() {
         return Objects.hash(nombre);
     }
-
-    protected Categoria(Parcel in) {
-        nombre = in.readString();
-        descripcion = in.readString();
-    }
-
-    public static final Creator<Categoria> CREATOR = new Creator<Categoria>() {
-        @Override
-        public Categoria createFromParcel(Parcel in) {
-            return new Categoria(in);
-        }
-
-        @Override
-        public Categoria[] newArray(int size) {
-            return new Categoria[size];
-        }
-    };
 
     public String getNombre() {
         return nombre;

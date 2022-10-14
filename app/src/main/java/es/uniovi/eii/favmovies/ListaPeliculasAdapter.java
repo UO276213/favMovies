@@ -10,19 +10,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import es.uniovi.eii.favmovies.modelos.Pelicula;
 
 public class ListaPeliculasAdapter extends RecyclerView.Adapter<ListaPeliculasAdapter.PeliculaViewHolder> {
 
-    public interface OnItemClickListener {
-        void onItemClick(Pelicula film);
-    }
-
-    private List<Pelicula> filmsList;
     private final OnItemClickListener listener;
-
+    private List<Pelicula> filmsList;
     public ListaPeliculasAdapter(List<Pelicula> filmsList, OnItemClickListener listener) {
         this.filmsList = filmsList;
         this.listener = listener;
@@ -50,8 +47,11 @@ public class ListaPeliculasAdapter extends RecyclerView.Adapter<ListaPeliculasAd
         return filmsList.size();
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(Pelicula film);
+    }
 
-    protected class PeliculaViewHolder extends RecyclerView.ViewHolder{
+    protected class PeliculaViewHolder extends RecyclerView.ViewHolder {
 
         private TextView title;
         private TextView date;
@@ -65,10 +65,11 @@ public class ListaPeliculasAdapter extends RecyclerView.Adapter<ListaPeliculasAd
         }
 
         public void bindUser(final Pelicula film, final OnItemClickListener listener) {
-            title.setText(film.getTitulo() + " " + film.getDate());
+            title.setText(film.getTitle() + " " + film.getDate());
             date.setText(film.getCategory().getNombre());
 
             //cargar Imagen
+            Picasso.get().load(film.getCoverUrl()).into(image);
 
             itemView.setOnClickListener(view -> listener.onItemClick(film));
         }

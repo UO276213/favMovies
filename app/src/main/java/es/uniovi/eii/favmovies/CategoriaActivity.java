@@ -1,12 +1,12 @@
 package es.uniovi.eii.favmovies;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import es.uniovi.eii.favmovies.modelos.Categoria;
 
@@ -18,12 +18,12 @@ public class CategoriaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_categoria);
 
         Intent intent = getIntent();
-        int posCategoria = intent.getIntExtra(MainActivity.POS_CATEGORIA_SELEECIONADA, 0);
+        int posCategoria = intent.getIntExtra(NewMovie.POS_CATEGORIA_SELEECIONADA, 0);
 
         Categoria categoriaEntrada = null;
 
         if (posCategoria > 0)
-            categoriaEntrada = intent.getParcelableExtra(MainActivity.CATEGORIA_SELECCIONADA);
+            categoriaEntrada = intent.getParcelableExtra(NewMovie.CATEGORIA_SELECCIONADA);
 
         TextView textViewCrea = findViewById(R.id.textViewCreo);
         final EditText editNomCategoria = findViewById(R.id.editNomCategoria);
@@ -46,7 +46,7 @@ public class CategoriaActivity extends AppCompatActivity {
         btnOk.setOnClickListener(view -> {
             Categoria categoriaSalida = new Categoria(editNomCategoria.getText().toString(), editDescripcion.getText().toString());
             Intent intentResult = new Intent();
-            intentResult.putExtra(MainActivity.CATEGORIA_MODIFICADA, categoriaSalida);
+            intentResult.putExtra(NewMovie.CATEGORIA_MODIFICADA, categoriaSalida);
 
             setResult(RESULT_OK, intentResult);
             finish();

@@ -1,9 +1,5 @@
 package es.uniovi.eii.favmovies;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +13,10 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -26,16 +26,14 @@ import es.uniovi.eii.favmovies.modelos.Categoria;
 import es.uniovi.eii.favmovies.modelos.Pelicula;
 import es.uniovi.eii.favmovies.util.Conexion;
 
-public class MainActivity extends AppCompatActivity {
+public class NewMovie extends AppCompatActivity {
 
-    String selectedCategory = "";
     public static final String POS_CATEGORIA_SELEECIONADA = "pos_categoria_seleccionada";
     public static final String CATEGORIA_SELECCIONADA = "categoria_seleccionada";
     public static final String CATEGORIA_MODIFICADA = "categoria_modificada";
     public static final String FILM_CREATED = "film_created";
-
     public static int GESTION_CATEGORIA = 1;
-
+    String selectedCategory = "";
     // Modelo
     private ArrayList<Categoria> categoryList;
 
@@ -56,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_new_movie);
         setTitle(R.string.app_title);
 
         titleInput = findViewById(R.id.titleTxtInput);
@@ -76,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         film = intent.getParcelableExtra(MainRecyclerActivity.SELECTED_FILM);
         boolean editionMode = intent.getBooleanExtra(MainRecyclerActivity.EDITION_MODE, false);
         if (film != null) {
-            titleInput.setText(film.getTitulo());
+            titleInput.setText(film.getTitle());
             synopsisInput.setText(film.getArgument());
             durationInput.setText(film.getDuration());
             dateInput.setText(film.getDate());
@@ -167,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void modificarCategoria() {
-        Intent categoriaIntent = new Intent(MainActivity.this, CategoriaActivity.class);
+        Intent categoriaIntent = new Intent(NewMovie.this, CategoriaActivity.class);
 
         categoriaIntent.putExtra(POS_CATEGORIA_SELEECIONADA, spinner.getSelectedItemPosition());
         creatingCategory = true;
@@ -237,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (conexion.CompruebaConexion()) compartirPeli();
                 else
-                    Toast.makeText(getApplicationContext(), R.string.check_conexion, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.conexion_error, Toast.LENGTH_LONG).show();
             }
         }
         return super.onOptionsItemSelected(item);
@@ -247,8 +245,8 @@ public class MainActivity extends AppCompatActivity {
         Intent itSend = new Intent(Intent.ACTION_SEND);
         itSend.setType("text/plain");
 
-        itSend.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.subject_compartir) + ": " + film.getTitulo());
-        itSend.putExtra(Intent.EXTRA_TEXT, getString(R.string.film_title) + ": " + film.getTitulo() + "\n" + getString(R.string.film_content) + ": " + film.getArgument());
+        itSend.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.subject_compartir) + ": " + film.getTitle());
+        itSend.putExtra(Intent.EXTRA_TEXT, getString(R.string.film_title) + ": " + film.getTitle() + "\n" + getString(R.string.film_content) + ": " + film.getArgument());
 
         Intent shareIntent = Intent.createChooser(itSend, null);
 
