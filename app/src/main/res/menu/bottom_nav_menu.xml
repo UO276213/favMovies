@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_info"
+        android:title="Información"/>
+
+    <item
+        android:id="@+id/navigation_actors"
+        android:title="ACTORES"
+        />
+
+    <item
+        android:id="@+id/navigation_argument"
+        android:title="ARGUMENTO"/>
+
+</menu>

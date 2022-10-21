@@ -13,6 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FavMovies">
         <activity
+            android:name=".SettingsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".MainRecyclerActivity"/>
+        <activity
             android:name=".ShowMovie"
             android:exported="false"
             android:label="@string/title_activity_show_movie"
@@ -31,7 +36,7 @@
             android:exported="false" />
         <activity
             android:name=".NewMovie"
-            android:exported="false"></activity>
+            android:exported="false" />
     </application>
 
 </manifest>

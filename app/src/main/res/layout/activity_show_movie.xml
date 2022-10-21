@@ -41,7 +41,7 @@
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_scrolling" />
+<!--    <include layout="@layout/content_scrolling" />-->
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -51,5 +51,7 @@
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
         app:srcCompat="@android:drawable/ic_media_play" />
+
+    <include layout="@layout/content_scrolling_botonera" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

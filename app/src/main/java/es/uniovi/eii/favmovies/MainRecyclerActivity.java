@@ -2,11 +2,14 @@ package es.uniovi.eii.favmovies;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,6 +34,10 @@ public class MainRecyclerActivity extends AppCompatActivity {
     private List<Pelicula> filmsList;
     private RecyclerView listFilmView;
 
+    public static String categoryFilter = null;
+    private SharedPreferences sharedPreferences;
+    private RecyclerView filmsListView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +45,8 @@ public class MainRecyclerActivity extends AppCompatActivity {
 
         loadFilms();
 
-        FloatingActionButton addNewFilmBtn = findViewById(R.id.new_film_btn);
-        addNewFilmBtn.setOnClickListener(v -> addNewFilm());
+//        FloatingActionButton addNewFilmBtn = findViewById(R.id.new_film_btn);
+//        addNewFilmBtn.setOnClickListener(v -> addNewFilm());
 
 
         listFilmView = findViewById(R.id.recyclerView);
@@ -127,4 +134,31 @@ public class MainRecyclerActivity extends AppCompatActivity {
 
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Log.d("FILTRO_CATEGORIA: ", " " + categoryFilter);
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        MainRecyclerActivity.categoryFilter = sharedPreferences.getString("keyCategory", "");
+
+        if (categoryFilter == "")
+            loadFilms();
+        else
+            loadFilms(categoryFilter);
+
+        filmsListView = findViewById(R.id.recyclerView);
+        filmsListView.setHasFixedSize(true);
+
+//TODO
+//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager();
+    }
+
+    private void loadFilms(String categoryFilter) {
+    }
+
+
 }

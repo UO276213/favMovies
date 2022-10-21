@@ -14,9 +14,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
+import es.uniovi.eii.favmovies.gui.ArgumentFragment;
+import es.uniovi.eii.favmovies.gui.InfoFragment;
 import es.uniovi.eii.favmovies.modelos.Pelicula;
 import es.uniovi.eii.favmovies.util.Conexion;
 
@@ -61,6 +64,9 @@ public class ShowMovie extends AppCompatActivity {
 //                        .setAction("Action", null).show();
             showTrailer(film.getVideoUrl());
         });
+
+        BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
     private void showTrailer(String videoUrl) {
@@ -77,8 +83,8 @@ public class ShowMovie extends AppCompatActivity {
 
         int id = item.getItemId();
 
-        if (id == R.id.action_settings)
-            return true;
+//        if (id == R.id.action_settings)
+//            return true;
 
         if (id == R.id.Compartir) {
             Conexion conexion = new Conexion(getApplicationContext());
@@ -105,13 +111,32 @@ public class ShowMovie extends AppCompatActivity {
     private void showData(Pelicula film) {
         if (!film.getTitle().isEmpty()) {
             String date = film.getDate();
-            category.setText(film.getCategory().getNombre());
-            estreno.setText(film.getDate());
-            duracion.setText(film.getDuration());
-            argumento.setText(film.getArgument());
-            Picasso.get().load(film.getCoverUrl()).into(caratula);
+            toolBarLayout.setTitle(film.getTitle() + " (" + date.substring(date.lastIndexOf("/") + 1) + ")");
             Picasso.get().load(film.getBackgroundUrl()).into(backgroundImage);
+//            Picasso.get().load(film.getCoverUrl()).into(caratula);
+
+            InfoFragment info = InfoFragment.newInstance(film.getDate(), film.getDuration(), film.getCoverUrl());
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, info).commit();
 
         }
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            if (film != null) {
+                switch (item.getItemId()) {
+                    case R.id.navigation_info:
+                        InfoFragment info = InfoFragment.newInstance(film.getDate(), film.getDuration(), film.getCoverUrl());
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, info).commit();
+                        break;
+                    case R.id.navigation_argument:
+                        ArgumentFragment fragment = ArgumentFragment.newInstance(film.gettA)
+
+                }
+                return true;
+            }
+            return false;
+        }
+    };
 }
