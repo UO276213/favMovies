@@ -131,8 +131,8 @@ public class ShowMovie extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, info).commit();
                         break;
                     case R.id.navigation_argument:
-                        ArgumentFragment fragment = ArgumentFragment.newInstance(film.gettA)
-
+                        ArgumentFragment arguemnt = ArgumentFragment.newInstance(film.getArgument());
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, arguemnt).commit();
                 }
                 return true;
             }

@@ -71,6 +71,7 @@ public class InfoFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_info, container, false);
 
+        final TextView tArgument = root.findViewById(R.id.argument_fragment_txt);
         final TextView tRealseDate = root.findViewById(R.id.info_fragment_date);
         final TextView tDuration = root.findViewById(R.id.info_fragment_duration_txt);
         ImageView Icover = root.findViewById(R.id.info_fragment_cover);

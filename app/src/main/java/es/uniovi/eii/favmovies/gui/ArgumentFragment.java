@@ -16,7 +16,7 @@ import es.uniovi.eii.favmovies.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link InfoFragment#newInstance} factory method to
+ * Use the {@link ArgumentFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class ArgumentFragment extends Fragment {
@@ -36,8 +36,8 @@ public class ArgumentFragment extends Fragment {
      * @return A new instance of fragment InfoFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static InfoFragment newInstance(String param1) {
-        InfoFragment fragment = new InfoFragment();
+    public static ArgumentFragment newInstance(String param1) {
+        ArgumentFragment fragment = new ArgumentFragment();
         Bundle args = new Bundle();
         args.putString(ARGUMENT, param1);
         fragment.setArguments(args);
@@ -56,7 +56,7 @@ public class ArgumentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_info, container, false);
+        View root = inflater.inflate(R.layout.fragment_argument, container, false);
         final TextView tArgument = root.findViewById(R.id.argument_fragment_txt);
         tArgument.setText(argument);
         return root;

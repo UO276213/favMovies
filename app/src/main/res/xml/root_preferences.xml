@@ -2,11 +2,6 @@
 
     <PreferenceCategory app:title="Categoría">
 
-        <EditTextPreference
-            app:key="signature"
-            app:title="@string/signature_title"
-            app:useSimpleSummaryProvider="true" />
-
         <ListPreference
             app:defaultValue="Acción"
             app:entries="@array/films_list_entries"

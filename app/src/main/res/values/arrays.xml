@@ -22,6 +22,27 @@
         <item>reply</item>
         <item>reply_all</item>
     </string-array>
-    <string-array name="films_list_entries" />
-    <string-array name="films_list_values" />
+    <string-array name="films_list_entries" >
+        <item>Acción</item>
+        <item>Aventuras</item>
+        <item>Dramáticas</item>
+        <item>Terror</item>
+        <item>Musicales</item>
+        <item>Ciencia Ficción</item>
+        <item>Guerra</item>
+        <item>Comedia</item>
+        <item>Románticas</item>
+    </string-array>
+
+    <string-array name="films_list_values" >
+        <item>Acción</item>
+        <item>Aventuras</item>
+        <item>Dramáticas</item>
+        <item>Terror</item>
+        <item>Musicales</item>
+        <item>Ciencia Ficción</item>
+        <item>Guerra</item>
+        <item>Comedia</item>
+        <item>Románticas</item>
+    </string-array>
 </resources>

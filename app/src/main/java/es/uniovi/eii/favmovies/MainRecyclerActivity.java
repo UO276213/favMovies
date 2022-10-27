@@ -5,14 +5,19 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.BufferedReader;
@@ -25,6 +30,7 @@ import java.util.List;
 
 import es.uniovi.eii.favmovies.modelos.Categoria;
 import es.uniovi.eii.favmovies.modelos.Pelicula;
+import es.uniovi.eii.favmovies.util.Conexion;
 
 public class MainRecyclerActivity extends AppCompatActivity {
 
@@ -63,6 +69,7 @@ public class MainRecyclerActivity extends AppCompatActivity {
             }
         });
 
+
         listFilmView.setAdapter(listFilmAdapter);
     }
 
@@ -78,39 +85,8 @@ public class MainRecyclerActivity extends AppCompatActivity {
     }
 
     private void loadFilms() {
-        filmsList = new ArrayList<>();
+        filmsList = readFilmsFromFile("lista_peliculas_url_utf8.csv");
 
-        try {
-            InputStream file = getAssets().open("lista_peliculas_url_utf8.csv");
-            BufferedReader br = new BufferedReader(new InputStreamReader(file));
-
-            while (br.ready()) {
-                String[] data = br.readLine().split(";");
-                if (data != null && data.length >= 5) {
-                    Categoria category = new Categoria(data[2], "");
-                    Pelicula film;
-                    if (data.length == 8)
-                        film = new Pelicula(data[0], data[1], category, data[3], data[4], data[5], data[6], data[7]);
-                    else
-                        film = new Pelicula(data[0], data[1], category, data[3], data[4]);
-
-                    filmsList.add(film);
-                }
-
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-//        Categoria actionCategory = new Categoria("Acción", "Pelis de acción");
-//
-//        Pelicula film = new Pelicula("Tenet", "Película que juega con el Tiempo", actionCategory, "165","10/05/2019");
-//        Pelicula film2 = new Pelicula("Avatar", "Película de bichos azules", actionCategory, "201","20/07/2011");
-//
-//        filmsList.add(film);
-//        filmsList.add(film2);
     }
 
     public void addNewFilm() {
@@ -143,9 +119,9 @@ public class MainRecyclerActivity extends AppCompatActivity {
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        MainRecyclerActivity.categoryFilter = sharedPreferences.getString("keyCategory", "");
+        categoryFilter = sharedPreferences.getString("keyCategory", null);
 
-        if (categoryFilter == "")
+        if (categoryFilter == null)
             loadFilms();
         else
             loadFilms(categoryFilter);
@@ -153,12 +129,78 @@ public class MainRecyclerActivity extends AppCompatActivity {
         filmsListView = findViewById(R.id.recyclerView);
         filmsListView.setHasFixedSize(true);
 
-//TODO
-//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager();
     }
 
     private void loadFilms(String categoryFilter) {
+
+        List<Pelicula> films = readFilmsFromFile("lista_peliculas_url_utf8.csv");
+        List<Pelicula> filtredFilms = new ArrayList<>(films.size());
+
+        for (Pelicula film : films) {
+            if (film.getCategory().getNombre().equals(categoryFilter))
+                filtredFilms.add(film);
+        }
+
+        filmsList = filtredFilms;
+
+        ListaPeliculasAdapter listFilmAdapter = new ListaPeliculasAdapter(filmsList, new ListaPeliculasAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Pelicula film) {
+                clickOnItem(film);
+            }
+        });
+
+
+        listFilmView.setAdapter(listFilmAdapter);
     }
 
+    private List<Pelicula> readFilmsFromFile(String fileName) {
+        List<Pelicula> films = new ArrayList<>();
 
+        try {
+            InputStream file = getAssets().open(fileName);
+            BufferedReader br = new BufferedReader(new InputStreamReader(file));
+
+            while (br.ready()) {
+                String[] data = br.readLine().split(";");
+                if (data != null && data.length >= 5) {
+                    Categoria category = new Categoria(data[2], "");
+                    Pelicula film;
+                    if (data.length == 8)
+                        film = new Pelicula(data[0], data[1], category, data[3], data[4], data[5], data[6], data[7]);
+                    else
+                        film = new Pelicula(data[0], data[1], category, data[3], data[4]);
+
+                    films.add(film);
+                }
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return films;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_recycled, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        if (id == R.id.recyled_settings) {
+            Intent settingActivity = new Intent(MainRecyclerActivity.this, SettingsActivity.class);
+            startActivity(settingActivity);
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }
