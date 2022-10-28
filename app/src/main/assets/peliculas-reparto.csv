@@ -1,0 +1,43 @@
+id_reparto;id_pelicula;Personaje
+1;8;Scar (voz)
+2;8;Joven Simba (voz)
+3;8;Mufasa (voz)
+4;8;Joven Nala (voz)
+5;1;Protagonista
+6;1;Neil
+7;1;Kat
+8;1;Andrei Sator
+9;2;Natasha Romanoff / Viuda negra
+10;2;Thor Odinson
+11;2;Tony Stark / Iron Man
+12;2;Capitán América
+13;2;Bruce Banner / Hulk
+9;6;Natasha Romanoff / Viuda negra
+10;6;Thor Odinson
+11;6;Tony Stark / Iron Man
+12;6;Capitán América
+13;6;Bruce Banner / Hulk
+19;3;Jake Sully
+20;3;Neytiri
+20;2;Gamora
+20;6;Gamora
+23;3;Dr. Grace Augustine
+24;4;Jack Dawson
+25;4;Rose DeWitt Bukater
+26;5;Rey
+27;5;Kylo Ren / Ben Solo
+9;9;Natasha Romanoff / Viuda negra
+10;9;Thor Odinson
+11;9;Tony Stark / Iron Man
+12;9;Capitán América
+13;9;Bruce Banner / Hulk
+33;7;Owen Grady
+33;6;Peter Quill / Star-Lord
+33;2;Peter Quill / Star-Lord
+36;7;Claire Dearing
+37;10;Harry Potter
+38;10;Hermione Granger
+39;10;Ron Weasley
+40;10;Severus Snape
+41;11;Anna (voz)
+42;11;Elsa (voz)

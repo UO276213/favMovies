@@ -14,6 +14,7 @@
         <entry key="..\:/Users/uo276213/Desktop/favMovies/app/src/main/res/layout/activity_show_movie2.xml" value="0.1" />
         <entry key="..\:/Users/uo276213/Desktop/favMovies/app/src/main/res/layout/content_scrolling.xml" value="0.25" />
         <entry key="..\:/Users/uo276213/Desktop/favMovies/app/src/main/res/layout/content_scrolling_botonera.xml" value="0.6167763157894737" />
+        <entry key="..\:/Users/uo276213/Desktop/favMovies/app/src/main/res/layout/fragment_actors.xml" value="0.14709569577935647" />
         <entry key="..\:/Users/uo276213/Desktop/favMovies/app/src/main/res/layout/fragment_argument.xml" value="0.3473731884057971" />
         <entry key="..\:/Users/uo276213/Desktop/favMovies/app/src/main/res/layout/fragment_info.xml" value="0.3473731884057971" />
         <entry key="..\:/Users/uo276213/Desktop/favMovies/app/src/main/res/layout/linea_recicler_view_pelicula.xml" value="0.32155797101449274" />
@@ -27,5 +28,5 @@
     </option>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_17_PREVIEW" project-jdk-name="17" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="17" project-jdk-type="JavaSDK" />
 </project>

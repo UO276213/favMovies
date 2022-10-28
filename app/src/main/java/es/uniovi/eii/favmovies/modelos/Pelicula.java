@@ -24,6 +24,7 @@ public class Pelicula implements Parcelable {
     private String coverUrl;
     private String backgroundUrl;
     private String videoUrl;
+    private int id;
 
     public Pelicula(String titulo, String argument, Categoria category, String duration, String date, String coverUrl, String backgroundUrl, String videoUrl) {
         this.title = titulo;
@@ -55,6 +56,8 @@ public class Pelicula implements Parcelable {
         videoUrl = in.readString();
 
     }
+
+    public Pelicula() { }
 
     public String getVideoUrl() {
         return videoUrl;
@@ -153,5 +156,13 @@ public class Pelicula implements Parcelable {
         parcel.writeString(coverUrl);
         parcel.writeString(backgroundUrl);
         parcel.writeString(videoUrl);
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 }

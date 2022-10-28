@@ -28,11 +28,19 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.uniovi.eii.favmovies.database.ActorsDataSource;
+import es.uniovi.eii.favmovies.database.PeliculasDataSource;
+import es.uniovi.eii.favmovies.database.RepartoPeliculaDataSource;
+import es.uniovi.eii.favmovies.modelos.Actor;
 import es.uniovi.eii.favmovies.modelos.Categoria;
 import es.uniovi.eii.favmovies.modelos.Pelicula;
+import es.uniovi.eii.favmovies.modelos.RepartoPelicula;
 import es.uniovi.eii.favmovies.util.Conexion;
 
 public class MainRecyclerActivity extends AppCompatActivity {
+
+    //SharedPreference de la MainRecycler
+    SharedPreferences sharedPreferencesMainRecycler;
 
     public static final String SELECTED_FILM = "selected_film";
     public static final String EDITION_MODE = "edition_mode";
@@ -43,6 +51,7 @@ public class MainRecyclerActivity extends AppCompatActivity {
     public static String categoryFilter = null;
     private SharedPreferences sharedPreferences;
     private RecyclerView filmsListView;
+    private PeliculasDataSource filmsDataSoure;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +94,7 @@ public class MainRecyclerActivity extends AppCompatActivity {
     }
 
     private void loadFilms() {
-        filmsList = readFilmsFromFile("lista_peliculas_url_utf8.csv");
+        filmsList = readFilmsFromFile("peliculas.csv");
 
     }
 
@@ -115,19 +124,45 @@ public class MainRecyclerActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        loadFilms();
+        cargarReparto();
+        cargarRepartoPelicula();
+
         Log.d("FILTRO_CATEGORIA: ", " " + categoryFilter);
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         categoryFilter = sharedPreferences.getString("keyCategory", null);
 
-        if (categoryFilter == null)
-            loadFilms();
-        else
-            loadFilms(categoryFilter);
+        //Cargamos en listaPeli las películas con o sin filtro.
+        PeliculasDataSource peliculasDataSource = new PeliculasDataSource(getApplicationContext());
+        //Abrir
+        peliculasDataSource.open();
+        if(categoryFilter == null || categoryFilter.equals("")) {
+            filmsList = peliculasDataSource.getAllValorations();
+        } else //A través de este método introducimos el filtro pero mediante lenguaje SQL en la extracción de la base de datos.
+            filmsList = peliculasDataSource.getFilteredValorations(categoryFilter);
+        //Cerrar
+        peliculasDataSource.close();
 
-        filmsListView = findViewById(R.id.recyclerView);
+
+        /*
+        Con la lista de películas iniciamos el RecyclerView
+         */
+        filmsListView = (RecyclerView) findViewById(R.id.recyclerView);
         filmsListView.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        filmsListView.setLayoutManager(layoutManager);
+        ListaPeliculasAdapter lpAdapter = new ListaPeliculasAdapter(filmsList,
+                new ListaPeliculasAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(Pelicula peli) {
+                        clickOnItem(peli);
+                    }
+                });
+
+        filmsListView.setAdapter(lpAdapter);
+
 
     }
 
@@ -136,10 +171,16 @@ public class MainRecyclerActivity extends AppCompatActivity {
         List<Pelicula> films = readFilmsFromFile("lista_peliculas_url_utf8.csv");
         List<Pelicula> filtredFilms = new ArrayList<>(films.size());
 
+        filmsDataSoure.open();
+
         for (Pelicula film : films) {
-            if (film.getCategory().getNombre().equals(categoryFilter))
+            if (film.getCategory().getNombre().equals(categoryFilter)){
                 filtredFilms.add(film);
+                filmsDataSoure.createpelicula(film);
+            }
         }
+
+        filmsDataSoure.close();
 
         filmsList = filtredFilms;
 
@@ -152,6 +193,53 @@ public class MainRecyclerActivity extends AppCompatActivity {
 
 
         listFilmView.setAdapter(listFilmAdapter);
+    }
+
+
+    protected void cargarReparto() {
+        Actor actor = null;
+        InputStream file = null;
+        InputStreamReader reader = null;
+        BufferedReader bufferedReader = null;
+
+
+        try {
+            file = getAssets().open("reparto.csv");
+            reader = new InputStreamReader(file);
+            bufferedReader = new BufferedReader(reader);
+
+
+            String line = null;
+
+            //Leemos la primera línea que es encabezado y por tanto no nos aporta información útil.
+            bufferedReader.readLine();
+
+            //A partir de aquí leemos a partir de la segunda línea.
+            while ((line = bufferedReader.readLine()) != null) {
+                String[] data = line.split(";");
+                if (data != null) {
+                    if (data.length==4) {
+                        actor = new Actor(Integer.parseInt(data[0]), data[1], data[2], data[3]);
+                    }
+
+                    //Metemos la película en la base de datos:
+                    ActorsDataSource actoresDataSource = new ActorsDataSource(getApplicationContext());
+                    actoresDataSource.open();
+                    actoresDataSource.createactor(actor);
+                    actoresDataSource.close();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (bufferedReader != null) {
+                try {
+                    bufferedReader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     private List<Pelicula> readFilmsFromFile(String fileName) {
@@ -171,7 +259,12 @@ public class MainRecyclerActivity extends AppCompatActivity {
                     else
                         film = new Pelicula(data[0], data[1], category, data[3], data[4]);
 
+                    PeliculasDataSource filmDataSource = new PeliculasDataSource(getApplicationContext());
+
+                    filmDataSource.open();
+                    filmDataSource.createpelicula(film);
                     films.add(film);
+                    filmDataSource.close();
                 }
 
             }
@@ -202,5 +295,51 @@ public class MainRecyclerActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    protected void cargarRepartoPelicula() {
+        RepartoPelicula rel = null;
+        InputStream file = null;
+        InputStreamReader reader = null;
+        BufferedReader bufferedReader = null;
+
+
+        try {
+            file = getAssets().open("peliculas-reparto.csv");
+            reader = new InputStreamReader(file);
+            bufferedReader = new BufferedReader(reader);
+            String line = null;
+
+            //Leemos la primera línea que es encabezado y por tanto no nos aporta información útil.
+            bufferedReader.readLine();
+
+            //A partir de aquí leemos a partir de la segunda línea.
+            while ((line = bufferedReader.readLine()) != null) {
+                String[] data = line.split(";");
+                if (data != null) {
+                    if (data.length==3) {
+                        rel = new RepartoPelicula(Integer.parseInt(data[0]), Integer.parseInt(data[1]), data[2]);
+                    }
+
+
+                    //Metemos la película en la base de datos:
+                    RepartoPeliculaDataSource relDataSource = new RepartoPeliculaDataSource(getApplicationContext());
+                    relDataSource.open();
+                    relDataSource.createrepartoPelicula(rel);
+                    relDataSource.close();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (bufferedReader != null) {
+                try {
+                    bufferedReader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }
