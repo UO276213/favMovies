@@ -26,6 +26,18 @@ public class Pelicula implements Parcelable {
     private String videoUrl;
     private int id;
 
+    public Pelicula(int id, String titulo, String argument, Categoria category, String duration, String date, String coverUrl, String backgroundUrl, String videoUrl) {
+        this.id = id;
+        this.title = titulo;
+        this.argument = argument;
+        this.category = category;
+        this.duration = duration;
+        this.date = date;
+        this.coverUrl = coverUrl;
+        this.backgroundUrl = backgroundUrl;
+        this.videoUrl = videoUrl;
+    }
+
     public Pelicula(String titulo, String argument, Categoria category, String duration, String date, String coverUrl, String backgroundUrl, String videoUrl) {
         this.title = titulo;
         this.argument = argument;

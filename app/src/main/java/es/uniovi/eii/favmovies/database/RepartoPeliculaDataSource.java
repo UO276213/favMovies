@@ -69,7 +69,7 @@ public class RepartoPeliculaDataSource {
 
         // Insertamos la valoracion
         long insertId =
-                database.insert(MyDBHelper.TABLA_REPARTO, null, values);
+                database.insert(MyDBHelper.TABLA_PELICULAS_REPARTO, null, values);
 
         return insertId;
     }
