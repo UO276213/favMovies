@@ -1,4 +1,4 @@
-package es.uniovi.eii.favmovies.database;
+package es.uniovi.eii.favmovies.datos.bd;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

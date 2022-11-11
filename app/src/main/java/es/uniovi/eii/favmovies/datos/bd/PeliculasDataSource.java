@@ -1,4 +1,4 @@
-package es.uniovi.eii.favmovies.database;
+package es.uniovi.eii.favmovies.datos.bd;
 
 import android.content.ContentValues;
 import android.content.Context;

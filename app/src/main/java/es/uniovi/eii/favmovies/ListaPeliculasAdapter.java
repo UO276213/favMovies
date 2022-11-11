@@ -65,8 +65,11 @@ public class ListaPeliculasAdapter extends RecyclerView.Adapter<ListaPeliculasAd
         }
 
         public void bindUser(final Pelicula film, final OnItemClickListener listener) {
-            title.setText(film.getTitle() + " " + film.getDate());
-            date.setText(film.getCategory().getNombre());
+//            title.setText(film.getTitle() + " " + film.getDate());
+            title.setText(film.getTitle());
+            date.setText(film.getDate());
+
+//            date.setText(film.getCategory().getNombre());
 
             //cargar Imagen
             Picasso.get().load(film.getCoverUrl()).into(image);
