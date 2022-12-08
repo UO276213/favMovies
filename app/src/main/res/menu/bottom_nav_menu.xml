@@ -3,15 +3,17 @@
 
     <item
         android:id="@+id/navigation_info"
-        android:title="Información"/>
+
+        android:title="@string/title_info" />
 
     <item
-        android:id="@+id/navigation_actors"
-        android:title="ACTORES"
-        />
+        android:id="@+id/navigation_actores"
+
+        android:title="@string/title_Actores" />
 
     <item
-        android:id="@+id/navigation_argument"
-        android:title="ARGUMENTO"/>
+        android:id="@+id/navigation_argumento"
+
+        android:title="@string/title_argumento" />
 
 </menu>

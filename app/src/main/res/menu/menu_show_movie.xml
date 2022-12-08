@@ -1,15 +1,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="es.uniovi.eii.favmovies.ShowMovie">
+    tools:context="es.uniovi.eii.sdm.ShowMovie">
     <item
-        android:id="@+id/Compartir"
+        android:id="@+id/compartir"
         android:icon="@android:drawable/ic_menu_share"
-        android:title="@string/share"
+        android:title="@string/menu_item_compartir"
         app:showAsAction="ifRoom" />
     <item
+        android:id="@+id/favorito"
+        android:icon="@drawable/twitter_like"
+        android:title="@string/menu_item_favorito"
+        app:showAsAction="ifRoom" />
+    <!--<item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"
-        app:showAsAction="never" />
+        app:showAsAction="never" />-->
 </menu>

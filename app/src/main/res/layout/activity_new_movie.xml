@@ -1,152 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mainLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".NewMovie">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/saveBtn"
-        android:layout_width="84dp"
-        android:layout_height="88dp"
-        android:text="@string/save_btn_text"
-        app:elevation="6dp"
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/layoutPrincipal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".NewMovie">
+
+    <Button
+        android:id="@+id/buttonGuardar"
+        android:layout_width="97dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="28dp"
+        android:text="@string/txt_guardar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.452"
-        app:layout_constraintStart_toEndOf="@+id/dateTxtInput"
-        app:layout_constraintTop_toBottomOf="@+id/durationTxtInput"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@android:drawable/ic_menu_save" />
-
-    <EditText
-        android:id="@+id/durationTxtInput"
-        android:layout_width="246dp"
-        android:layout_height="53dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="@string/duration_label"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.151"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerCategory"
-        app:layout_constraintVertical_bias="0.057" />
+        app:layout_constraintTop_toBottomOf="@+id/eFecha" />
 
     <EditText
-        android:id="@+id/dateTxtInput"
-        android:layout_width="216dp"
-        android:layout_height="49dp"
+        android:id="@+id/editContenido"
+        android:layout_width="300dp"
+        android:layout_height="197dp"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="@string/film_date"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:gravity="start|top"
+        android:hint="@string/hint_contenido_nota"
+        android:importantForAutofill="no"
+        android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.128"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/durationTxtInput"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/categoryLabel"
-        android:layout_width="83dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/category_label"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.076"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/synopsisTxtInput"
-        app:layout_constraintVertical_bias="0.002" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <EditText
-        android:id="@+id/synopsisTxtInput"
-        android:layout_width="235dp"
-        android:layout_height="125dp"
+        android:id="@+id/editTitulo"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="@string/synopsis_placeholder"
+        android:hint="@string/hint_titulo_nota"
+        android:importantForAutofill="no"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.142"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/synopsisLabel"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/synopsisLabel"
-        android:layout_width="83dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/synopsis_label"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.076"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleTxtInput"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/titleLebel"
-        android:layout_width="90dp"
-        android:layout_height="21dp"
-        android:text="@string/title_label"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.077"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.022" />
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+         />
 
     <EditText
-        android:id="@+id/titleTxtInput"
-        android:layout_width="248dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="16dp"
+        android:id="@+id/editDuracion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/title_placeholder"
+        android:hint="@string/hint_duracion"
+        android:importantForAutofill="no"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.153"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleLebel"
-        app:layout_constraintVertical_bias="0.001" />
+        app:layout_constraintStart_toStartOf="@+id/spinnerCategoria"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerCategoria" />
 
-    <Spinner
-        android:id="@+id/spinnerCategory"
-        android:layout_width="160dp"
-        android:layout_height="39dp"
-        android:layout_marginTop="16dp"
-        android:entries="@array/film_types_array"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.099"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/categoryLabel"
-        app:layout_constraintVertical_bias="0.011" />
+    <EditText
+        android:id="@+id/eFecha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:ems="10"
+        android:hint="@string/hint_fecha"
+        android:importantForAutofill="no"
+        android:inputType="date"
+        app:layout_constraintStart_toStartOf="@+id/editDuracion"
+        app:layout_constraintTop_toBottomOf="@+id/editDuracion" />
 
     <ImageButton
-        android:id="@+id/modifyBtnCategory"
-        android:layout_width="84dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="16dp"
+        android:id="@+id/btnModifCategoria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/desc_cont_modificar"
+        app:layout_constraintBottom_toBottomOf="@+id/spinnerCategoria"
+        app:layout_constraintEnd_toEndOf="@+id/editContenido"
+        app:layout_constraintTop_toTopOf="@+id/spinnerCategoria"
+        app:srcCompat="@android:drawable/ic_menu_edit" />
+
+    <Spinner
+        android:id="@+id/spinnerCategoria"
+        android:layout_width="209dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="47dp"
+        android:entries="@array/tipos_pelis_array"
+        app:layout_constraintStart_toStartOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/top_border"
+        android:text="@string/titulo"
+        app:layout_constraintStart_toStartOf="@+id/editTitulo"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:src="@android:drawable/ic_menu_edit"
-        android:text="@string/select_category_btn"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.614"
-        app:layout_constraintStart_toEndOf="@+id/spinnerCategory"
-        app:layout_constraintTop_toBottomOf="@+id/categoryLabel"
-        app:layout_constraintVertical_bias="0.0" />
+        android:text="@string/categoria"
+        app:layout_constraintStart_toStartOf="@+id/editContenido"
+        app:layout_constraintTop_toBottomOf="@+id/editContenido" />
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/contenido"
+        app:layout_constraintStart_toStartOf="@+id/editContenido"
+        app:layout_constraintTop_toBottomOf="@+id/editTitulo" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+

@@ -11,15 +11,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/text_margin"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_margin="@dimen/text_margin">
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:text="@string/category_label"
+            android:text="@string/categoria"
             android:textSize="18sp" />
 
         <TextView
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:padding="8sp"
             android:text="@string/tenet_categoria"
-            android:textSize="18sp" />
+            android:textSize="18sp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="@string/film_date"
+                android:text="@string/estreno"
                 android:textSize="18sp" />
 
             <TextView
@@ -62,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="@string/duration_label"
+                android:text="@string/duracion"
                 android:textSize="18sp" />
 
             <TextView
@@ -87,7 +87,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:text="@string/synopsis_label"
+            android:text="@string/contenido"
             android:textSize="18sp" />
 
         <TextView
